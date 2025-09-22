@@ -1,0 +1,395 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Ramo de Flores</title>
+  <style>
+    body {
+      margin: 0;
+      height: 100vh;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      background: linear-gradient(135deg, #fff5c3, #f6d365);
+      font-family: 'Arial', sans-serif;
+    }
+
+    .card {
+      position: relative;
+      width: 400px;
+      min-height: 500px;
+      background: white;
+      border-radius: 20px;
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      text-align: center;
+      padding: 20px;
+      overflow: hidden;
+    }
+
+    .message {
+      z-index: 2;
+      font-size: 20px;
+      color: #444;
+      margin-bottom: 20px;
+    }
+
+    .bouquet {
+      position: relative;
+      width: 250px;
+      height: 300px;
+      margin: 20px auto;
+    }
+
+    /* Tallos */
+    .stem {
+      position: absolute;
+      width: 6px;
+      height: 120px;
+      background: linear-gradient(to bottom, #2e8b57, #3cb371);
+      bottom: 0;
+      border-radius: 3px;
+      z-index: 1;
+    }
+
+    .stem1 {
+      left: 50%;
+      transform: translateX(-50%);
+      height: 140px;
+    }
+
+    .stem2 {
+      left: 40%;
+      transform: translateX(-40%) rotate(-5deg);
+      height: 130px;
+    }
+
+    .stem3 {
+      left: 60%;
+      transform: translateX(-60%) rotate(5deg);
+      height: 130px;
+    }
+
+    .stem4 {
+      left: 35%;
+      transform: translateX(-35%) rotate(-10deg);
+      height: 120px;
+    }
+
+    .stem5 {
+      left: 65%;
+      transform: translateX(-65%) rotate(10deg);
+      height: 120px;
+    }
+
+    /* Hojas */
+    .leaf {
+      position: absolute;
+      background: linear-gradient(to right, #3cb371, #2e8b57);
+      border-radius: 0 50% 50% 0;
+      z-index: 2;
+    }
+
+    .leaf::after {
+      content: '';
+      position: absolute;
+      width: 80%;
+      height: 80%;
+      background: linear-gradient(to right, #2e8b57, #3cb371);
+      border-radius: 0 50% 50% 0;
+      top: 10%;
+      left: 10%;
+    }
+
+    .leaf1 {
+      width: 30px;
+      height: 15px;
+      bottom: 60px;
+      left: 48%;
+      transform: rotate(-15deg);
+    }
+
+    .leaf2 {
+      width: 35px;
+      height: 16px;
+      bottom: 80px;
+      left: 55%;
+      transform: rotate(25deg);
+    }
+
+    .leaf3 {
+      width: 28px;
+      height: 14px;
+      bottom: 70px;
+      left: 40%;
+      transform: rotate(-25deg);
+    }
+
+    /* Flores */
+    .flower {
+      position: absolute;
+      z-index: 3;
+      animation: float 4s ease-in-out infinite;
+    }
+
+    .flower:nth-child(2n) {
+      animation-delay: 1s;
+    }
+
+    .flower:nth-child(3n) {
+      animation-delay: 2s;
+    }
+
+    .petals {
+      position: relative;
+      width: 40px;
+      height: 40px;
+    }
+
+    .petal {
+      position: absolute;
+      width: 20px;
+      height: 20px;
+      background: #ffeb3b;
+      border-radius: 50% 50% 50% 0;
+      transform-origin: bottom left;
+    }
+
+    .center {
+      position: absolute;
+      width: 15px;
+      height: 15px;
+      background: #ff9800;
+      border-radius: 50%;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      z-index: 2;
+      box-shadow: 0 0 5px rgba(255, 152, 0, 0.5);
+    }
+
+    /* Posicionamiento de las flores */
+    .flower1 {
+      top: 30px;
+      left: 50%;
+      transform: translateX(-50%);
+    }
+
+    .flower2 {
+      top: 40px;
+      left: 40%;
+    }
+
+    .flower3 {
+      top: 40px;
+      left: 60%;
+    }
+
+    .flower4 {
+      top: 60px;
+      left: 35%;
+    }
+
+    .flower5 {
+      top: 60px;
+      left: 65%;
+    }
+
+    .flower6 {
+      top: 20px;
+      left: 45%;
+    }
+
+    .flower7 {
+      top: 20px;
+      left: 55%;
+    }
+
+    /* Crear pétalos para cada flor */
+    .flower1 .petal:nth-child(1) { transform: rotate(0deg); }
+    .flower1 .petal:nth-child(2) { transform: rotate(45deg); }
+    .flower1 .petal:nth-child(3) { transform: rotate(90deg); }
+    .flower1 .petal:nth-child(4) { transform: rotate(135deg); }
+    .flower1 .petal:nth-child(5) { transform: rotate(180deg); }
+    .flower1 .petal:nth-child(6) { transform: rotate(225deg); }
+    .flower1 .petal:nth-child(7) { transform: rotate(270deg); }
+    .flower1 .petal:nth-child(8) { transform: rotate(315deg); }
+
+    .flower2 .petal:nth-child(1) { transform: rotate(0deg); }
+    .flower2 .petal:nth-child(2) { transform: rotate(60deg); }
+    .flower2 .petal:nth-child(3) { transform: rotate(120deg); }
+    .flower2 .petal:nth-child(4) { transform: rotate(180deg); }
+    .flower2 .petal:nth-child(5) { transform: rotate(240deg); }
+    .flower2 .petal:nth-child(6) { transform: rotate(300deg); }
+
+    .flower3 .petal:nth-child(1) { transform: rotate(0deg); }
+    .flower3 .petal:nth-child(2) { transform: rotate(72deg); }
+    .flower3 .petal:nth-child(3) { transform: rotate(144deg); }
+    .flower3 .petal:nth-child(4) { transform: rotate(216deg); }
+    .flower3 .petal:nth-child(5) { transform: rotate(288deg); }
+
+    /* Efectos y animaciones */
+    @keyframes float {
+      0%, 100% {
+        transform: translateY(0) rotate(0deg);
+      }
+      50% {
+        transform: translateY(-5px) rotate(2deg);
+      }
+    }
+
+    .shine {
+      position: absolute;
+      top: -10px;
+      right: -10px;
+      width: 20px;
+      height: 20px;
+      background: white;
+      border-radius: 50%;
+      opacity: 0.7;
+      filter: blur(5px);
+    }
+
+    .btn-cancion {
+      margin-top: 20px;
+      padding: 10px 20px;
+      background: #ffb347;
+      color: white;
+      border: none;
+      border-radius: 30px;
+      font-size: 16px;
+      cursor: pointer;
+      transition: 0.3s;
+      z-index: 10;
+    }
+
+    .btn-cancion:hover {
+      background: #ff9800;
+      transform: scale(1.1);
+    }
+  </style>
+</head>
+<body>
+  <div class="card">
+    <div class="message">
+      <h2>💐 Ute amo mucho manita  💐</h2>
+      <p>perdoname por no haber estado contigo pero quiero que sepas que te amo y no te quiero perder 🌻</p>
+    </div>
+
+    <div class="bouquet">
+      <!-- Tallos -->
+      <div class="stem stem1"></div>
+      <div class="stem stem2"></div>
+      <div class="stem stem3"></div>
+      <div class="stem stem4"></div>
+      <div class="stem stem5"></div>
+      
+      <!-- Hojas -->
+      <div class="leaf leaf1"></div>
+      <div class="leaf leaf2"></div>
+      <div class="leaf leaf3"></div>
+      
+      <!-- Flores -->
+      <div class="flower flower1">
+        <div class="petals">
+          <div class="petal"></div>
+          <div class="petal"></div>
+          <div class="petal"></div>
+          <div class="petal"></div>
+          <div class="petal"></div>
+          <div class="petal"></div>
+          <div class="petal"></div>
+          <div class="petal"></div>
+          <div class="center"></div>
+          <div class="shine"></div>
+        </div>
+      </div>
+      
+      <div class="flower flower2">
+        <div class="petals">
+          <div class="petal"></div>
+          <div class="petal"></div>
+          <div class="petal"></div>
+          <div class="petal"></div>
+          <div class="petal"></div>
+          <div class="petal"></div>
+          <div class="center"></div>
+          <div class="shine"></div>
+        </div>
+      </div>
+      
+      <div class="flower flower3">
+        <div class="petals">
+          <div class="petal"></div>
+          <div class="petal"></div>
+          <div class="petal"></div>
+          <div class="petal"></div>
+          <div class="petal"></div>
+          <div class="center"></div>
+          <div class="shine"></div>
+        </div>
+      </div>
+      
+      <div class="flower flower4">
+        <div class="petals">
+          <div class="petal"></div>
+          <div class="petal"></div>
+          <div class="petal"></div>
+          <div class="petal"></div>
+          <div class="petal"></div>
+          <div class="petal"></div>
+          <div class="center"></div>
+          <div class="shine"></div>
+        </div>
+      </div>
+      
+      <div class="flower flower5">
+        <div class="petals">
+          <div class="petal"></div>
+          <div class="petal"></div>
+          <div class="petal"></div>
+          <div class="petal"></div>
+          <div class="petal"></div>
+          <div class="petal"></div>
+          <div class="petal"></div>
+          <div class="center"></div>
+          <div class="shine"></div>
+        </div>
+      </div>
+      
+      <div class="flower flower6">
+        <div class="petals">
+          <div class="petal"></div>
+          <div class="petal"></div>
+          <div class="petal"></div>
+          <div class="petal"></div>
+          <div class="petal"></div>
+          <div class="center"></div>
+          <div class="shine"></div>
+        </div>
+      </div>
+      
+      <div class="flower flower7">
+        <div class="petals">
+          <div class="petal"></div>
+          <div class="petal"></div>
+          <div class="petal"></div>
+          <div class="petal"></div>
+          <div class="petal"></div>
+          <div class="petal"></div>
+          <div class="center"></div>
+          <div class="shine"></div>
+        </div>
+      </div>
+    </div>
+
+    <button class="btn-cancion" onclick="window.open('https://www.youtube.com/watch?v=H35-bBzN0Ak&list=RDH35-bBzN0Ak&start_radio=1')">
+      Escuchar Canción 🎶
+    </button>
+  </div>
+</body>
+</html>
